@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.schemas import RecoveryRequest, RecoveryResponse
-from app.recovery import recover_element
+from .schemas import RecoveryRequest, RecoveryResponse
+from .recovery import recover_element
 
 app = FastAPI(title="Smart DOM Recovery Tool")
 
