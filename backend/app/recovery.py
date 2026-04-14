@@ -43,7 +43,9 @@ def _jaccard_similarity(left: set[str], right: set[str]) -> float:
     return len(intersection) / len(union)
 
 
-def _attribute_similarity(old_attrs: dict[str, str], new_attrs: dict[str, str]) -> float:
+def _attribute_similarity(
+    old_attrs: dict[str, str], new_attrs: dict[str, str]
+) -> float:
     if not old_attrs or not new_attrs:
         return 0.0
 
@@ -120,39 +122,44 @@ def recover_element(request: RecoveryRequest) -> RecoveryResponse:
 
     if old_element is None:
         return RecoveryResponse(
-            found=False,
-            reason="Old element not found by selector in old HTML."
+            found=False, reason="Old element not found by selector in old HTML."
         )
 
     candidates = new_soup.find_all(True)
 
     if not candidates:
-        return RecoveryResponse(
-            found=False,
-            reason="No elements found in new HTML."
-        )
+        return RecoveryResponse(found=False, reason="No elements found in new HTML.")
 
-    best_candidate: Tag | None = None
-    best_score = -1.0
-    best_reason = "No candidate scored."
+    scored_candidates: list[tuple[Tag, float, str]] = []
 
     for candidate in candidates:
         score, reason = _score_candidate(old_element, candidate)
-        if score > best_score:
-            best_score = score
-            best_candidate = candidate
-            best_reason = reason
+        scored_candidates.append((candidate, score, reason))
 
-    if best_candidate is None or best_score <= 0:
+        scored_candidates.sort(key=lambda x: x[1], reverse=True)
+
+    top_candidates = scored_candidates[:3]
+
+    if not top_candidates or top_candidates[0][1] <= 0:
         return RecoveryResponse(
-            found=False,
-            reason="No suitable candidate found in new HTML."
+            found=False, reason="No suitable candidate found in new HTML."
         )
+
+    best_candidate, best_score, best_reason = top_candidates[0]
 
     return RecoveryResponse(
         found=True,
         matched_tag=best_candidate.name,
         matched_text=best_candidate.get_text(" ", strip=True) or None,
         score=round(best_score, 3),
-        reason=best_reason
+        reason=best_reason,
+        candidates=[
+            {
+                "tag": c.name,
+                "text": c.get_text(" ", strip=True) or None,
+                "score": round(score, 3),
+                "reason": reason,
+            }
+            for c, score, reason in top_candidates
+        ],
     )
