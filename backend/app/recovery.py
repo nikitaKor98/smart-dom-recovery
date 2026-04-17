@@ -151,6 +151,7 @@ def recover_element(request: RecoveryRequest) -> RecoveryResponse:
         found=True,
         matched_tag=best_candidate.name,
         matched_text=best_candidate.get_text(" ", strip=True) or None,
+        matched_html=str(best_candidate),
         score=round(best_score, 3),
         reason=best_reason,
         candidates=[

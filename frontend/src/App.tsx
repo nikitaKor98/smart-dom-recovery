@@ -11,6 +11,7 @@ type RecoveryResponse = {
   found: boolean;
   matched_tag: string | null;
   matched_text: string | null;
+  matched_html: string | null;
   score: number | null;
   reason: string | null;
   candidates: Candidate[];
@@ -235,12 +236,51 @@ function App() {
                   <strong>Matched text:</strong> {result.matched_text ?? "-"}
                 </div>
                 <div>
+                  <strong>Matched HTML:</strong> {result.matched_html ?? "-"}
+                </div>
+                <div>
                   <strong>Score:</strong> {result.score ?? "-"}
                 </div>
                 <div>
                   <strong>Reason:</strong> {result.reason ?? "-"}
                 </div>
               </div>
+            </div>
+
+            <div
+              style={{
+                background: "#ffffff",
+                borderRadius: 16,
+                padding: 20,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+              }}
+            >
+              <h2 style={{ marginTop: 0 }}>Highlighted matched element</h2>
+
+              {result.matched_html ? (
+                <div
+                  style={{
+                    background: "#fff7ed",
+                    border: "2px solid #fb923c",
+                    borderRadius: 12,
+                    padding: 16,
+                  }}
+                >
+                  <pre
+                    style={{
+                      margin: 0,
+                      whiteSpace: "pre-wrap",
+                      wordBreak: "break-word",
+                      fontFamily: "monospace",
+                      fontSize: 14,
+                    }}
+                  >
+                    {result.matched_html}
+                  </pre>
+                </div>
+              ) : (
+                <p>No matched HTML returned.</p>
+              )}
             </div>
 
             <div
