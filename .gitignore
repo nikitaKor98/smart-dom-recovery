@@ -9,15 +9,18 @@ Thumbs.db
 .env
 .venv/
 venv/
+.deps/
 
 # Python
 __pycache__/
 *.pyc
+*.pyo
 
 # Node
 node_modules/
 dist/
 build/
+*.tsbuildinfo
 
 # IDE
 .vscode/

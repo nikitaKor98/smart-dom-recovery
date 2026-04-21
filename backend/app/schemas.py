@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class Candidate(BaseModel):
     tag: str
@@ -18,4 +18,4 @@ class RecoveryResponse(BaseModel):
     matched_html: str | None = None
     score: float | None = None
     reason: str | None = None
-    candidates: list[Candidate] = []
+    candidates: list[Candidate] = Field(default_factory=list)

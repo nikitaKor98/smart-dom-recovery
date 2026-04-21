@@ -136,7 +136,7 @@ def recover_element(request: RecoveryRequest) -> RecoveryResponse:
         score, reason = _score_candidate(old_element, candidate)
         scored_candidates.append((candidate, score, reason))
 
-        scored_candidates.sort(key=lambda x: x[1], reverse=True)
+    scored_candidates.sort(key=lambda x: x[1], reverse=True)
 
     top_candidates = scored_candidates[:3]
 

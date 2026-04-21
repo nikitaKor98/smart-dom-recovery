@@ -2,7 +2,7 @@
 
 Tool for recovering broken CSS selectors after DOM changes.
 
-## Idea
+## 💡 Idea
 Given:
 - old HTML
 - new HTML
@@ -10,23 +10,68 @@ Given:
 
 The tool tries to find the corresponding element in the new DOM.
 
-## Planned features
-- selector recovery
-- DOM similarity scoring
-- candidate ranking
-- frontend visualization
+## ❗ Problem
+
+E2E tests and scrapers often break when the DOM structure changes:
+- class names change
+- elements are wrapped differently
+- attributes are modified
+
+As a result, selectors become invalid.
+
+## 👍 Solution
+
+This tool finds the most similar element in the updated DOM using a scoring-based approach.
+
+Instead of exact matching, it compares elements by:
+- tag name
+- text content
+- class similarity
+- attribute similarity
+
+And returns:
+- best match
+- top candidates
+- explanation of the match
+
+## ⚙️ Features
+
+- DOM parsing using BeautifulSoup
+- Similarity scoring engine
+- Candidate ranking system
+- Explainable matching (reason field)
+- Interactive UI (React)
+- Demo examples (one-click testing)
+- Highlighted matched element
+
+## 🧠 How it works
+
+1. Parse old and new HTML
+2. Locate original element using selector
+3. Iterate over all elements in new DOM
+4. Compute similarity score for each candidate
+5. Rank candidates
+6. Return best match + top candidates
 
 ## Tech stack
-- Frontend: React + TypeScript
-- Backend: FastAPI + Python
 
-## Run Locally
+Frontend:
+- React
+- TypeScript
+- Vite
+
+Backend:
+- Python
+- FastAPI
+- BeautifulSoup (lxml)
 
 ### Requirements
+
 - Node.js 20.18+
 - Python 3.14
 
 ### Backend
+
 From the project root:
 
 ```powershell
@@ -38,6 +83,7 @@ Backend will be available at `http://127.0.0.1:8000`.
 API docs will be available at `http://127.0.0.1:8000/docs`.
 
 ### Frontend
+
 From the `frontend` directory:
 
 ```powershell

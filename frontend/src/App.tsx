@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 
 type Candidate = {
   tag: string;
@@ -17,7 +17,7 @@ type RecoveryResponse = {
   candidates: Candidate[];
 };
 
-const actionButtonStyle: React.CSSProperties = {
+const actionButtonStyle: CSSProperties = {
   padding: "8px 12px",
   borderRadius: 8,
   border: "1px solid #d1d5db",
