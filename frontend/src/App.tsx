@@ -17,6 +17,15 @@ type RecoveryResponse = {
   candidates: Candidate[];
 };
 
+const actionButtonStyle: React.CSSProperties = {
+  padding: "8px 12px",
+  borderRadius: 8,
+  border: "1px solid #d1d5db",
+  background: "#ffffff",
+  cursor: "pointer",
+  fontWeight: 600,
+};
+
 function App() {
   const [oldHtml, setOldHtml] = useState(
     "<div><button class='btn primary'>Buy now</button></div>"
@@ -29,6 +38,45 @@ function App() {
   const [result, setResult] = useState<RecoveryResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const examples = {
+    button: {
+      oldHtml: "<div><button class='btn primary'>Buy now</button></div>",
+      newHtml:
+        "<section><button class='button primary large'>Buy now</button><button class='secondary'>Cancel</button></section>",
+      selector: "button",
+    },
+    link: {
+      oldHtml: "<div><a class='link main-link' href='/buy'>Buy</a></div>",
+      newHtml:
+        "<main><a class='main-link cta' href='/buy'>Buy</a><a href='/help'>Help</a></main>",
+      selector: "a",
+    },
+    input: {
+      oldHtml:
+        "<form><input class='input primary' placeholder='Enter name' /></form>",
+      newHtml:
+        "<form><input class='field main-input' placeholder='Enter name' /></form>",
+      selector: "input",
+    },
+  };
+
+  const loadExample = (key: keyof typeof examples) => {
+    const ex = examples[key];
+    setOldHtml(ex.oldHtml);
+    setNewHtml(ex.newHtml);
+    setSelector(ex.selector);
+    setResult(null);
+    setError(null);
+  };
+
+  const clearAll = () => {
+    setOldHtml("");
+    setNewHtml("");
+    setSelector("");
+    setResult(null);
+    setError(null);
+  };
 
   const handleSubmit = async () => {
     setError(null);
@@ -87,6 +135,29 @@ function App() {
             Recover broken CSS selectors by comparing an old DOM against a new
             DOM.
           </p>
+        </div>
+
+        <div style={{ marginTop: 16, marginBottom: 24, display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <button
+            style={actionButtonStyle}
+            onClick={() => loadExample("button")}>
+            Load Button Example
+          </button>
+          <button
+            style={actionButtonStyle}
+            onClick={() => loadExample("link")}>
+            Load Link Example
+          </button>
+          <button
+            style={actionButtonStyle}
+            onClick={() => loadExample("input")}>
+            Load Input Example
+          </button>
+          <button
+            style={actionButtonStyle}
+            onClick={clearAll}>
+            Clear
+          </button>
         </div>
 
         <div
