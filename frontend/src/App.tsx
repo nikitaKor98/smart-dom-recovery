@@ -15,10 +15,10 @@ import "./styles.css";
 
 function App() {
   const [oldHtml, setOldHtml] = useState(
-    "<div><button class='btn primary'>Buy now</button></div>"
+    "<div><button class='btn primary'>Buy now</button></div>",
   );
   const [newHtml, setNewHtml] = useState(
-    "<section><button class='button primary large'>Buy now</button><button class='secondary'>Cancel</button></section>"
+    "<section><button class='button primary large'>Buy now</button><button class='secondary'>Cancel</button></section>",
   );
   const [selector, setSelector] = useState("button");
 
@@ -90,12 +90,8 @@ function App() {
   };
 
   return (
-    <div
-      className="app-shell"
-    >
-      <div
-        className="app-container"
-      >
+    <div className="app-shell">
+      <div className="app-container">
         <PageHeader
           title="Smart DOM Recovery Tool"
           subtitle="Recover broken CSS selectors by comparing an old DOM against a new
@@ -121,28 +117,20 @@ function App() {
         />
 
         {error && (
-          <div
-            className="error-card"
-          >
+          <div className="error-card">
             <strong>Error:</strong> {error}
           </div>
         )}
 
         {result && (
-          <div
-            className="results-grid"
-          >
+          <div className="results-grid">
             <BestMatchCard result={result} />
 
-            <div
-              className="card"
-            >
+            <div className="card">
               <MatchedHtmlPreview matchedHtml={result.matched_html} />
             </div>
 
-            <div
-              className="card"
-            >
+            <div className="card">
               <h2 style={{ marginTop: 0 }}>Top candidates</h2>
 
               {result.candidates.length === 0 ? (

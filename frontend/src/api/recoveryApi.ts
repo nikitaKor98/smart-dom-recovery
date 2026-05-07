@@ -1,5 +1,7 @@
 import type { RecoveryResponse } from "../types";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 type RecoverElementParams = {
   oldHtml: string;
   newHtml: string;
@@ -11,7 +13,7 @@ export async function recoverElement({
   newHtml,
   selector,
 }: RecoverElementParams): Promise<RecoveryResponse> {
-  const response = await fetch("http://127.0.0.1:8000/recover", {
+  const response = await fetch(`${API_URL}/recover`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

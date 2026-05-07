@@ -14,10 +14,7 @@ function CandidatesList({ candidates }: CandidatesListProps) {
       ) : (
         <div className="candidates-grid">
           {candidates.map((candidate, index) => (
-            <div
-              key={`${candidate.tag}-${index}`}
-              className="candidate-item"
-            >
+            <div key={`${candidate.tag}-${index}`} className="candidate-item">
               <div>
                 <strong>#{index + 1}</strong>
               </div>
