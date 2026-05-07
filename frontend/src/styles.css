@@ -101,11 +101,12 @@ textarea {
 }
 
 .primary-button {
+  min-width: 180px;
   background-color: #111827;
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  padding: 12px 18px;
+  padding: 14px 24px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -176,4 +177,9 @@ textarea {
   word-break: break-word;
   font-family: monospace;
   font-size: 14px;
+}
+
+.submit-row {
+  display: flex;
+  justify-content: center;
 }

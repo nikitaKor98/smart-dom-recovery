@@ -7,6 +7,8 @@ import HtmlInputPanel from "./components/HtmlInputPanel";
 import BestMatchCard from "./components/BestMatchCard";
 import CandidatesList from "./components/CandidatesList";
 
+import { recoverElement } from "./api/recoveryApi";
+
 import type { RecoveryResponse, ExampleData } from "./types";
 
 import "./styles.css";
@@ -69,23 +71,12 @@ function App() {
     setResult(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/recover", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          old_html: oldHtml,
-          new_html: newHtml,
-          selector,
-        }),
+      const data = await recoverElement({
+        oldHtml,
+        newHtml,
+        selector,
       });
 
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-
-      const data: RecoveryResponse = await response.json();
       setResult(data);
     } catch (err) {
       if (err instanceof Error) {
