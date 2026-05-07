@@ -3,6 +3,9 @@ import { useState } from "react";
 import PageHeader from "./components/PageHeader";
 import ExampleControls from "./components/ExampleControls";
 import MatchedHtmlPreview from "./components/MatchedHtmlPreview";
+import HtmlInputPanel from "./components/HtmlInputPanel";
+import BestMatchCard from "./components/BestMatchCard";
+import CandidatesList from "./components/CandidatesList";
 
 import type { RecoveryResponse, ExampleData } from "./types";
 
@@ -115,58 +118,16 @@ function App() {
           onLoadButton={() => loadExample("button")}
         />
 
-        <div
-          className="card"
-        >
-          <div className="field-group">
-            <label
-              className="field-label"
-            >
-              Old HTML
-            </label>
-            <textarea
-              value={oldHtml}
-              onChange={(e) => setOldHtml(e.target.value)}
-              rows={8}
-              className="textarea-input"
-            />
-          </div>
-
-          <div className="field-group">
-            <label
-              className="field-label"
-            >
-              New HTML
-            </label>
-            <textarea
-              value={newHtml}
-              onChange={(e) => setNewHtml(e.target.value)}
-              rows={8}
-              className="textarea-input"
-            />
-          </div>
-
-          <div className="field-group">
-            <label
-              className="field-label"
-            >
-              Selector
-            </label>
-            <input
-              value={selector}
-              onChange={(e) => setSelector(e.target.value)}
-              className="text-input"
-            />
-          </div>
-
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className="primary-button"
-          >
-            {isLoading ? "Finding..." : "Find element"}
-          </button>
-        </div>
+        <HtmlInputPanel
+          oldHtml={oldHtml}
+          newHtml={newHtml}
+          selector={selector}
+          isLoading={isLoading}
+          onOldHtmlChange={setOldHtml}
+          onNewHtmlChange={setNewHtml}
+          onSelectorChange={setSelector}
+          onSubmit={handleSubmit}
+        />
 
         {error && (
           <div
@@ -180,31 +141,7 @@ function App() {
           <div
             className="results-grid"
           >
-            <div
-              className="card"
-            >
-              <h2 style={{ marginTop: 0 }}>Best match</h2>
-              <div className="result-row">
-                <div>
-                  <strong>Found:</strong> {String(result.found)}
-                </div>
-                <div>
-                  <strong>Matched tag:</strong> {result.matched_tag ?? "-"}
-                </div>
-                <div>
-                  <strong>Matched text:</strong> {result.matched_text ?? "-"}
-                </div>
-                <div>
-                  <strong>Matched HTML:</strong> {result.matched_html ?? "-"}
-                </div>
-                <div>
-                  <strong>Score:</strong> {result.score ?? "-"}
-                </div>
-                <div>
-                  <strong>Reason:</strong> {result.reason ?? "-"}
-                </div>
-              </div>
-            </div>
+            <BestMatchCard result={result} />
 
             <div
               className="card"
@@ -220,30 +157,7 @@ function App() {
               {result.candidates.length === 0 ? (
                 <p>No candidates returned.</p>
               ) : (
-                <div className="candidates-grid">
-                  {result.candidates.map((candidate, index) => (
-                    <div
-                      key={`${candidate.tag}-${index}`}
-                      className="candidate-item"
-                    >
-                      <div>
-                        <strong>#{index + 1}</strong>
-                      </div>
-                      <div>
-                        <strong>Tag:</strong> {candidate.tag}
-                      </div>
-                      <div>
-                        <strong>Text:</strong> {candidate.text ?? "-"}
-                      </div>
-                      <div>
-                        <strong>Score:</strong> {candidate.score}
-                      </div>
-                      <div>
-                        <strong>Reason:</strong> {candidate.reason}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <CandidatesList candidates={result.candidates} />
               )}
             </div>
           </div>
