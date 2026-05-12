@@ -160,6 +160,7 @@ def recover_element(request: RecoveryRequest) -> RecoveryResponse:
                 "text": c.get_text(" ", strip=True) or None,
                 "score": round(score, 3),
                 "reason": reason,
+                "html": str(c),
             }
             for c, score, reason in top_candidates
         ],

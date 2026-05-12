@@ -3,6 +3,7 @@ export type Candidate = {
   text: string | null;
   score: number;
   reason: string;
+  html?: string | null;
 };
 
 export type RecoveryResponse = {

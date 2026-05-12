@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+import { copyToClipboard } from "../utils/copyToClipboard";
+
 import type { Candidate } from "../types";
 
 type CandidatesListProps = {
@@ -34,6 +38,17 @@ function CandidatesList({ candidates }: CandidatesListProps) {
               <div>
                 <strong>Reason:</strong> {candidate.reason}
               </div>
+
+              <button
+                className="secondary-button"
+                onClick={() => {
+                  if (candidate.html) {
+                    copyToClipboard(candidate.html);
+                  }
+                }}
+              >
+                Copy HTML
+              </button>
             </div>
           ))}
         </div>

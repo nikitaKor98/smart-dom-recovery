@@ -183,3 +183,14 @@ textarea {
   display: flex;
   justify-content: center;
 }
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0;
+}
