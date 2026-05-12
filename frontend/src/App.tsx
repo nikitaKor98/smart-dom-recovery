@@ -7,9 +7,9 @@ import HtmlInputPanel from "./components/HtmlInputPanel";
 import BestMatchCard from "./components/BestMatchCard";
 import CandidatesList from "./components/CandidatesList";
 
-import { recoverElement } from "./api/recoveryApi";
+import { useRecovery } from "./hooks/useRecovery";
 
-import type { RecoveryResponse, ExampleData } from "./types";
+import type { ExampleData } from "./types";
 
 import "./styles.css";
 
@@ -22,9 +22,7 @@ function App() {
   );
   const [selector, setSelector] = useState("button");
 
-  const [result, setResult] = useState<RecoveryResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { result, error, isLoading, recover } = useRecovery();
 
   const examples = {
     button: {
@@ -53,40 +51,20 @@ function App() {
     setOldHtml(ex.oldHtml);
     setNewHtml(ex.newHtml);
     setSelector(ex.selector);
-    setResult(null);
-    setError(null);
   };
 
   const clearAll = () => {
     setOldHtml("");
     setNewHtml("");
     setSelector("");
-    setResult(null);
-    setError(null);
   };
 
-  const handleSubmit = async () => {
-    setError(null);
-    setIsLoading(true);
-    setResult(null);
-
-    try {
-      const data = await recoverElement({
-        oldHtml,
-        newHtml,
-        selector,
-      });
-
-      setResult(data);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Unknown error");
-      }
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSubmit = () => {
+    recover({
+      oldHtml,
+      newHtml,
+      selector,
+    });
   };
 
   return (
