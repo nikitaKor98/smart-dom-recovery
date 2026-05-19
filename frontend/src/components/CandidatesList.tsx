@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { copyToClipboard } from "../utils/copyToClipboard";
 
 import type { Candidate } from "../types";
