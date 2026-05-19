@@ -2,8 +2,18 @@
 
 Tool for recovering broken CSS selectors after DOM changes.
 
+## 🚀 Live Demo
+
+Frontend:
+https://smart-dom-recovery.vercel.app/
+
+Backend API:
+https://smart-dom-recovery-api.onrender.com/docs
+
 ## 💡 Idea
+
 Given:
+
 - old HTML
 - new HTML
 - old CSS selector
@@ -13,6 +23,7 @@ The tool tries to find the corresponding element in the new DOM.
 ## ❗ Problem
 
 E2E tests and scrapers often break when the DOM structure changes:
+
 - class names change
 - elements are wrapped differently
 - attributes are modified
@@ -24,12 +35,14 @@ As a result, selectors become invalid.
 This tool finds the most similar element in the updated DOM using a scoring-based approach.
 
 Instead of exact matching, it compares elements by:
+
 - tag name
 - text content
 - class similarity
 - attribute similarity
 
 And returns:
+
 - best match
 - top candidates
 - explanation of the match
@@ -56,11 +69,13 @@ And returns:
 ## Tech stack
 
 Frontend:
+
 - React
 - TypeScript
 - Vite
 
 Backend:
+
 - Python
 - FastAPI
 - BeautifulSoup (lxml)
